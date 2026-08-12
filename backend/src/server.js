@@ -88,10 +88,11 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) } }));
 }
 
-// Health check
-app.get('/health', (req, res) => {
+// Root & Health check
+app.get(['/', '/health'], (req, res) => {
   res.json({
     status: 'ok',
+    message: 'Yabu Supermarket Backend API is Live!',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     env: process.env.NODE_ENV,
