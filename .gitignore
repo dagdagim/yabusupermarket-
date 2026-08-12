@@ -1,0 +1,27 @@
+# Node / Backend
+backend/node_modules/
+backend/.env
+backend/logs/
+backend/*.log
+
+# Flutter
+flutter_app/.dart_tool/
+flutter_app/.pub/
+flutter_app/.pub-cache/
+flutter_app/ephemeral/
+flutter_app/android/.gradle/
+flutter_app/android/app/build/
+flutter_app/ios/Pods/
+
+# Build ignore default, but keep release APK and Web build output
+flutter_app/build/*
+!flutter_app/build/app
+!flutter_app/build/app/outputs
+!flutter_app/build/app/outputs/flutter-apk
+!flutter_app/build/app/outputs/flutter-apk/app-release.apk
+!flutter_app/build/web
+
+# Environment & OS
+.DS_Store
+Thumbs.db
+*.tmp
