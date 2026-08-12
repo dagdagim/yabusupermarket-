@@ -287,7 +287,11 @@ class ApiService {
   }
 
   Future<void> deleteReconciliation(String id) async {
-    await _dio.delete('/reconciliation/$id');
+    try {
+      await _dio.delete('/reconciliation/$id');
+    } catch (_) {
+      await _dio.post('/reconciliation/$id/delete');
+    }
   }
 
   // REPORTS

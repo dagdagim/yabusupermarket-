@@ -16,7 +16,8 @@ const productRoutes = require('./routes/products');
 const salesRoutes = require('./routes/sales');
 const shipmentRoutes = require('./routes/shipments');
 const userRoutes = require('./routes/users');
-const { reconRouter, reportRouter } = require('./routes/other');
+const reconciliationRoutes = require('./routes/reconciliation');
+const { reportRouter } = require('./routes/other');
 
 const app = express();
 const server = http.createServer(app);
@@ -105,7 +106,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/reconciliation', reconRouter);
+app.use('/api/reconciliation', reconciliationRoutes);
 app.use('/api/reports', reportRouter);
 
 // 404 handler
