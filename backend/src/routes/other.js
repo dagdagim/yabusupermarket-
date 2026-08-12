@@ -7,6 +7,7 @@ const {
   getReconciliations,
   updateReconciliation,
   getTodayReconciliation,
+  deleteReconciliation,
 } = require('../controllers/reconciliationController');
 const { getReport, exportExcel, exportPDF } = require('../controllers/reportController');
 const { protect, authorize } = require('../middleware/auth');
@@ -17,6 +18,7 @@ reconRouter.post('/generate', generateReconciliation);
 reconRouter.get('/today', getTodayReconciliation);
 reconRouter.get('/', getReconciliations);
 reconRouter.put('/:id', updateReconciliation);
+reconRouter.delete('/:id', deleteReconciliation);
 
 // Report routes
 reportRouter.use(protect, authorize('admin'));

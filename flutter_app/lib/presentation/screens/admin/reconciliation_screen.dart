@@ -134,10 +134,55 @@ class _ReconciliationScreenState extends ConsumerState<ReconciliationScreen> {
                       reconciliation: _reconciliations[i],
                       fmt: _fmt,
                       onTap: () => _showUpdateDialog(_reconciliations[i]),
+                      onDelete: () => _confirmDelete(_reconciliations[i]),
                     ),
                   ),
                 ),
     );
+  }
+
+  Future<void> _confirmDelete(ReconciliationModel r) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Delete Reconciliation', style: TextStyle(fontFamily: 'Sora', fontWeight: FontWeight.w700)),
+        content: Text('Are you sure you want to delete reconciliation for ${r.shopName} (${DateFormat('d MMM yyyy').format(r.date)})?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Delete', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    try {
+      final api = ref.read(apiServiceProvider);
+      await api.deleteReconciliation(r.id);
+      await _loadReconciliations();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Reconciliation deleted successfully'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Delete failed: $e'), backgroundColor: AppColors.error),
+        );
+      }
+    }
   }
 
   void _showUpdateDialog(ReconciliationModel r) {
@@ -158,11 +203,13 @@ class _ReconciliationCard extends StatelessWidget {
   final ReconciliationModel reconciliation;
   final NumberFormat fmt;
   final VoidCallback onTap;
+  final VoidCallback onDelete;
 
   const _ReconciliationCard({
     required this.reconciliation,
     required this.fmt,
     required this.onTap,
+    required this.onDelete,
   });
 
   @override
@@ -196,7 +243,17 @@ class _ReconciliationCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  StatusBadge(status: r.status),
+                  Row(
+                    children: [
+                      StatusBadge(status: r.status),
+                      const SizedBox(width: 4),
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline, size: 20, color: AppColors.error),
+                        onPressed: onDelete,
+                        tooltip: 'Delete',
+                      ),
+                    ],
+                  ),
                 ],
               ),
               const Divider(height: 20),

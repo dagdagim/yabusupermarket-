@@ -195,9 +195,30 @@ const getTodayReconciliation = async (req, res) => {
   }
 };
 
+// @desc    Delete a reconciliation record
+// @route   DELETE /api/reconciliation/:id
+// @access  Admin
+const deleteReconciliation = async (req, res) => {
+  try {
+    const reconciliation = await Reconciliation.findById(req.params.id);
+
+    if (!reconciliation) {
+      return errorResponse(res, 'Reconciliation record not found.', 404);
+    }
+
+    await Reconciliation.findByIdAndDelete(req.params.id);
+    logger.info(`Reconciliation deleted: ${req.params.id}`);
+    return successResponse(res, { id: req.params.id }, 'Reconciliation deleted successfully');
+  } catch (error) {
+    logger.error('Delete reconciliation error:', error);
+    return errorResponse(res, 'Failed to delete reconciliation.', 500);
+  }
+};
+
 module.exports = {
   generateReconciliation,
   getReconciliations,
   updateReconciliation,
   getTodayReconciliation,
+  deleteReconciliation,
 };

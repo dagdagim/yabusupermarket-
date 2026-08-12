@@ -286,6 +286,10 @@ class ApiService {
     return res.data;
   }
 
+  Future<void> deleteReconciliation(String id) async {
+    await _dio.delete('/reconciliation/$id');
+  }
+
   // REPORTS
   Future<Map<String, dynamic>> getReport({String period = 'daily', String? shop}) async {
     final res = await _dio.get('/reports', queryParameters: {
