@@ -19,10 +19,8 @@ const connectDB = async () => {
       });
       logger.info(`MongoDB Connected: ${conn.connection.host}`);
 
-      if (process.env.NODE_ENV === 'development') {
-        await ensureDevData();
-        logger.info('Dev login: admin@yabusupermarket.com / Admin@1234');
-      }
+      await ensureDevData();
+      logger.info('Default accounts ready: admin@yabusupermarket.com / Admin@1234');
       return;
     } catch (error) {
       const isLast = attempt === maxAttempts;
