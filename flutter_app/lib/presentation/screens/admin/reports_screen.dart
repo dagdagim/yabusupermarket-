@@ -77,7 +77,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
       }
 
       final baseUrl = api.getReportExportUrl(type, period: _selectedPeriod);
-      var exportUrl = '$baseUrl&token=$token';
+      var exportUrl = '$baseUrl&token=$token&ekub=$_ekubContribution';
       if (_selectedShopId != null) {
         exportUrl += '&shop=$_selectedShopId';
       }
