@@ -361,7 +361,7 @@ const exportPDF = async (req, res) => {
 
     const doc = new PDFDocument({ margin: 40, size: 'A4', bufferPages: true });
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `inline; filename=Yabu-Supermarket-Full-Report-${Date.now()}.pdf`);
+    res.setHeader('Content-Disposition', `attachment; filename=Yabu-Supermarket-Report-${Date.now()}.pdf`);
     doc.pipe(res);
 
     const formatETB = (val) => `${Number(val || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ETB`;
