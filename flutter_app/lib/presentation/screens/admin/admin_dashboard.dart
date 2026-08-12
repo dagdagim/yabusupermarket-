@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import '../../../core/constants/app_constants.dart';
 import '../../providers/app_providers.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/models.dart';
@@ -239,6 +240,32 @@ class _DashboardTab extends ConsumerWidget {
               loading: () => const ShimmerList(),
               error: (e, _) => ErrorCard(message: e.toString()),
             ),
+            const SizedBox(height: 30),
+            Center(
+              child: Column(
+                children: [
+                  const Text(
+                    'Yabu Supermarket System',
+                    style: TextStyle(
+                      color: AppColors.textDisabled,
+                      fontSize: 11,
+                      fontFamily: 'Sora',
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Created by ${AppStrings.companyName} • Developed by ${AppStrings.developerName}',
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                      fontFamily: 'Sora',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

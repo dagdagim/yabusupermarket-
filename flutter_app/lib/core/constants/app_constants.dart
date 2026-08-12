@@ -47,6 +47,9 @@ class AppConstants {
 class AppStrings {
   static const String appName = 'Yabu Supermarket';
   static const String tagline = 'Smart Supermarket Inventory & Sales';
+  static const String companyName = 'Tobiya';
+  static const String developerName = 'Dagim Bekele';
+  static const String portfolioUrl = 'https://dagimbekelebunera.vercel.app/';
 
   // Auth
   static const String loginTitle = 'Welcome Back';

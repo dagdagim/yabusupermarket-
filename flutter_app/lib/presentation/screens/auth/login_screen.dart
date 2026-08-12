@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../providers/app_providers.dart';
@@ -250,14 +251,70 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                               ),
                               const SizedBox(height: 20),
 
-                              const Center(
-                                child: Text(
-                                  'Yabu Supermarket System v1.0',
-                                  style: TextStyle(
-                                    color: AppColors.textDisabled,
-                                    fontSize: 11,
-                                    fontFamily: 'Sora',
-                                  ),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      'Yabu Supermarket System v1.0',
+                                      style: TextStyle(
+                                        color: AppColors.textDisabled,
+                                        fontSize: 11,
+                                        fontFamily: 'Sora',
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    const Text(
+                                      'Created by ${AppStrings.companyName}',
+                                      style: TextStyle(
+                                        color: AppColors.textSecondary,
+                                        fontSize: 12,
+                                        fontFamily: 'Sora',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    InkWell(
+                                      onTap: () async {
+                                        final uri = Uri.parse(AppStrings.portfolioUrl);
+                                        if (await canLaunchUrl(uri)) {
+                                          await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                        }
+                                      },
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Text(
+                                              'Developed by ',
+                                              style: TextStyle(
+                                                color: AppColors.textSecondary,
+                                                fontSize: 12,
+                                                fontFamily: 'Sora',
+                                              ),
+                                            ),
+                                            Text(
+                                              AppStrings.developerName,
+                                              style: const TextStyle(
+                                                color: AppColors.primary,
+                                                fontSize: 12,
+                                                fontFamily: 'Sora',
+                                                fontWeight: FontWeight.w700,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            const Icon(
+                                              Icons.open_in_new,
+                                              size: 13,
+                                              color: AppColors.primary,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
