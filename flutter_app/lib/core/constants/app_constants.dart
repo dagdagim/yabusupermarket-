@@ -5,14 +5,17 @@ class AppConstants {
   static String get baseUrl => '$_apiHost/api';
   static String get socketUrl => _apiHost;
 
-  /// Your PC's Wi‑Fi IP (phone must be on the same network).
-  /// Override: flutter run --dart-define=API_HOST=192.168.1.5
+  static const String _hostedUrl = 'https://yabusupermarket.onrender.com';
   static const String _lanHost = String.fromEnvironment(
     'API_HOST',
     defaultValue: '10.121.201.219',
   );
 
   static String get _apiHost {
+    const useLocal = bool.fromEnvironment('USE_LOCAL', defaultValue: false);
+    if (!useLocal) {
+      return _hostedUrl;
+    }
     if (kIsWeb || defaultTargetPlatform == TargetPlatform.windows) {
       return 'http://localhost:5000';
     }
